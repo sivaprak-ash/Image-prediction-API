@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Prediction API — Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Syne:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">image<span class="accent">predict</span></span>
+      </div>
+      <nav class="header-nav">
+        <a href="#playground">playground</a>
+        <a href="#endpoints">endpoints</a>
+        <a href="https://docs.anthropic.com/en/docs/build-with-claude/vision" target="_blank">docs ↗</a>
+      </nav>
+      <div class="status-pill" id="serverStatus">
+        <span class="status-dot"></span> checking…
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="hero-eyebrow">REST API · Claude Vision · Node.js</p>
+      <h1 class="hero-title">Image Prediction <br/><em>API</em></h1>
+      <p class="hero-sub">Classify · Describe · Detect · OCR · Sentiment — powered by Claude's multimodal vision.</p>
+    </section>
+
+    <!-- ── Playground ─────────────────────────────────────── -->
+    <section id="playground" class="playground-section">
+      <div class="section-label">// playground</div>
+
+      <div class="playground-grid">
+        <div class="card upload-card">
+          <div class="card-title">01 — Upload</div>
+          <div class="drop-zone" id="dropZone">
+            <input type="file" id="fileInput" accept="image/*" />
+            <div class="dz-content">
+              <div class="dz-icon">⬡</div>
+              <p class="dz-main">Drop image or click to browse</p>
+              <p class="dz-hint">PNG · JPG · WEBP · GIF · max 10 MB</p>
+            </div>
+            <img id="previewImg" class="preview-img" alt="Preview" style="display:none" />
+          </div>
+        </div>
+
+        <div class="card config-card">
+          <div class="card-title">02 — Configure</div>
+
+          <label class="field-label">Endpoint</label>
+          <div class="endpoint-tabs" id="endpointTabs">
+            <button class="ep-tab active" data-ep="classify">classify</button>
+            <button class="ep-tab" data-ep="describe">describe</button>
+            <button class="ep-tab" data-ep="detect">detect</button>
+            <button class="ep-tab" data-ep="ocr">ocr</button>
+            <button class="ep-tab" data-ep="sentiment">sentiment</button>
+            <button class="ep-tab" data-ep="custom">custom</button>
+          </div>
+
+          <div id="customPromptWrap" style="display:none; margin-top:12px">
+            <label class="field-label">Custom Prompt</label>
+            <textarea id="customPrompt" rows="3" placeholder="What is in this image? Return JSON."></textarea>
+          </div>
+
+          <div class="url-row">
+            <span class="method-badge">POST</span>
+            <span class="url-text" id="urlDisplay">/api/v1/predict/classify</span>
+          </div>
+
+          <button id="runBtn" class="run-btn" disabled>
+            <span class="run-btn-inner">▶ Run prediction</span>
+          </button>
+        </div>
+
+        <div class="card response-card">
+          <div class="response-header">
+            <div class="card-title">03 — Response</div>
+            <div class="response-meta">
+              <span id="statusBadge" class="status-badge">—</span>
+              <button class="copy-btn" id="copyBtn" style="display:none">copy JSON</button>
+            </div>
+          </div>
+          <div id="responseOutput" class="response-output">
+            <span class="placeholder-text">Response will appear here…</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Endpoints reference ────────────────────────────── -->
+    <section id="endpoints" class="endpoints-section">
+      <div class="section-label">// endpoints</div>
+      <div class="endpoints-grid" id="endpointsGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built with <a href="https://docs.anthropic.com">Claude API</a> · Node.js · Express</p>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
